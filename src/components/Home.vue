@@ -1,37 +1,28 @@
 <template>
-    <div>
-      <h1>Bienvenido, {{ usuario.nombre }} {{ usuario.apellido }}</h1>
-      <p>Rol: {{ usuario.rol }}</p>
-      <button @click="logout">Cerrar Sesión</button>
-    </div>
-  </template>
-  
-  <script>
-  import { ref, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  
-  export default {
-    name: 'Home',
-    setup() {
-      const usuario = ref(null);
-      const router = useRouter();
-  
-      onMounted(() => {
-        const usuarioData = localStorage.getItem('usuario');
-        if (!usuarioData) {
-          router.push({ name: 'Login' });
-        } else {
-          usuario.value = JSON.parse(usuarioData);
-        }
-      });
-  
-      const logout = () => {
-        localStorage.removeItem('usuario');
-        router.push({ name: 'Login' });
-      };
-  
-      return { usuario, logout };
-    },
-  };
-  </script>
-  
+  <div>
+    <div class="bienvenida">
+            <p>Bienvenidos a la Dirección de Bienestar, Admisión y Nivelación Universitaria:
+                <br>
+                Mensaje:
+                <br>
+                Comunidad Universitaria, la Dirección de Bienestar Universitario tiene como finalidad brindar una serie de servicios orientados a mejorar la estadía de quienes formamos la Universidad Laica Eloy Alfaro de Manabí mediante la participación profesional, activa, ética y responsable de cada uno de los funcionarios que laboran en este dependencia, convirtiéndose así en un apoyo disponible en beneficio de su salud, de su estado psicosocial y en la entrega de espacios de formación cultural.
+                <br>
+                <h4>Lic. Víctor Zambrano Cedeño, Mg. Sc.
+                <br>
+                DIRECTOR DE BIENESTAR UNIVERSITARIO
+            </h4>
+          </p>
+        </div>   
+    
+  </div>
+</template>
+
+
+<script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default {
+name:'Home',  
+}
+</script>
