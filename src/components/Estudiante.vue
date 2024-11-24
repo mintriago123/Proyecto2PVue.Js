@@ -108,7 +108,7 @@ export default {
     // Función para cerrar sesión
     const logout = () => {
       localStorage.removeItem('usuario');
-      router.push({ name: 'Login' });
+      router.push({ name: 'Home' });
     };
 
     // Cargar citas cuando el componente se monte
