@@ -1,0 +1,281 @@
+/* Estilos para los inputs */
+input, textarea {
+    font-family: Arial, sans-serif;
+    border-radius: 8px;
+    width: 100%; /* Ajuste para que ocupe el 100% del contenedor */
+    max-width: 400px; /* Limita el ancho máximo */
+    padding: 12px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #7d817f;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border-color: #4caf50; /* Cambia el color del borde al estar en foco */
+    outline: none; /* Elimina el borde azul predeterminado */
+}
+
+/* Estilos para formularios */
+form, .loginForm {
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para mayor elegancia */
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    max-width: 600px; /* Tamaño máximo ajustado */
+    border: 1px solid #e2e9e6;
+}
+
+/* Estilos para botones */
+button {
+    border-radius: 8px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: #316d33;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    background-color: #255226;
+    box-shadow: none;
+}
+
+/* Ajustes para el área de texto */
+textarea {
+    height: 150px;
+    resize: vertical; /* Permite redimensionar solo verticalmente */
+}
+
+/* Estilos para mensajes */
+.mensaje {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 15px;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Estilo global */
+body {
+    background-color: #e2e9e6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    background-color: #e2e9e6;
+    border-radius: 10px;
+    font-family: inherit;
+}
+
+/* Estilos para el encabezado */
+header {
+    background-color: #a4e66e;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header img {
+    max-height: 60px;
+    border-radius: 10%;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* Sección de bienvenida */
+.bienvenida {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+/* Estilos para las secciones de servicios */
+.servicios {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    color: #333;
+    text-align: justify;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+/* Pie de página */
+footer {
+    background-color: #797777;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mensajes e información oculta */
+.mensaje, .info {
+    text-align: center;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sección de citas */
+#citasEstudiante, #citasPersonal {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#citasEstudiante h2, #citasPersonal h2 {
+    color: #4caf50;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+#nombre, #apellido, #direccion {
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Imagen de perfil */
+#perfil {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    float: right;
+    margin-bottom: 20px;
+}
+
+/* Animación de desvanecimiento */
+@keyframes fadeEffect {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Estilos para las pestañas */
+.tab {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #4caf50;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-wrap: wrap; /* Asegura que las pestañas se ajusten en pantallas pequeñas */
+}
+
+.tab button {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: background-color 0.3s ease;
+    flex: 1; /* Hace que las pestañas se distribuyan de manera uniforme */
+    text-align: center;
+}
+
+.tab button:hover {
+    background-color: #316d33;
+}
+
+.tab button.active {
+    background-color: #255226;
+}
+
+/* Estilos para el contenido de las pestañas */
+.tabcontent {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none;
+    animation: fadeEffect 1s ease;
+    display: none;
+}
+
+/* Estilos para las subtabs */
+.subtabcontent, .subsubtabcontent {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
+}
+
+/* Botones de las subtabs */
+.subtablink, .subsubtablink {
+    background-color: #b8cae2;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 16px;
+    margin: 0 5px; /* Alineación más suave entre los botones */
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.subtablink:hover, .subsubtablink:hover {
+    background-color: #8eb5e7;
+}
+
+.subtablink.active, .subsubtablink.active {
+    background-color: #8eb5e7;
+}
+
+/* Mejoras adicionales para móviles */
+@media (max-width: 768px) {
+    .tab button, .subtablink, .subsubtablink {
+        flex: 1; /* Hace que las pestañas y subpestañas ocupen toda la fila en pantallas pequeñas */
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
+
+.logout-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px; /* Optional: adds some space from the edges */
+    /* Additional styling for the button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}

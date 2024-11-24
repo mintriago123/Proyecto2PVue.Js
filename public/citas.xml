@@ -1,0 +1,12 @@
+<citas>
+  <cita id="1">
+    <fecha>2024-10-10</fecha>
+    <hora>10:00</hora>
+    <disponible>true</disponible>
+  </cita>
+  <cita id="2">
+    <fecha>2024-10-11</fecha>
+    <hora>14:00</hora>
+    <disponible>true</disponible>
+  </cita>
+</citas>
