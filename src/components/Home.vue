@@ -15,7 +15,10 @@
         </div>   
         <div class="servicios">
           <h2>Nuestros Servicios</h2>
-
+          
+          <router-link id="class" to="/login" class="logo-link">
+            <h3>Iniciar sesion</h3>
+          </router-link>
         </div>
   </div>
 </template>
