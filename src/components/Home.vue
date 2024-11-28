@@ -18,7 +18,7 @@
 
           <Tabs :tabs="['tab1', 'tab2', 'tab3']">
                   <template #tab1>
-                    <p>Este es el contenido de la primera pestaña.</p>                  
+                    <p>Este es el contenido de la primera pestaña.</p>
                   </template>
                   <template #tab2>
                     <p>Este es el contenido de la segunda pestaña.</p>

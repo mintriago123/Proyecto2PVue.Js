@@ -40,74 +40,82 @@
     },
   };
   </script>
-  
   <style scoped>
   /* Contenedor principal de las pestañas */
-  .tabs-navigation {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #e2e9e6;
-    display: flex;
-    flex-wrap: wrap; /* Ajuste para pantallas pequeñas */
-    margin: 20px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+.tabs-navigation {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px auto;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más suave */
+}
+
+/* Botones de las pestañas */
+.tabs-navigation button {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 12px 12px 0 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 22px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.tabs-navigation button:hover {
+  background-color: #3b9142;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.tabs-navigation button.active {
+  background-color: #255226;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Contenido de las pestañas */
+.tabs-content {
+  background-color: #ffffff;
+  border-radius: 0 0 12px 12px;
+  padding: 24px;
+  border: 2px solid #e0e0e0;
+  border-top: none;
+  animation: fadeEffect 0.5s ease-in-out;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+/* Transición para el contenido de las pestañas */
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  /* Botones de las pestañas */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejoras para móviles */
+@media (max-width: 768px) {
   .tabs-navigation button {
-    background-color: #4caf50;
-    color: white;
-    border-radius: 8px 8px 0 0; /* Redondeo en la parte superior */
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 12px 20px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    flex: 1; /* Distribuye uniformemente las pestañas */
-    text-align: center;
+    flex: 1;
+    padding: 12px;
+    font-size: 0.9rem;
   }
-  
-  .tabs-navigation button:hover {
-    background-color: #316d33;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tabs-navigation button.active {
-    background-color: #255226;
-    color: #fff;
-    font-weight: bold; /* Resalta la pestaña activa */
-  }
-  
-  /* Contenido de las pestañas */
   .tabs-content {
-    background-color: #fff;
-    border-radius: 0 0 8px 8px; /* Redondeo en la parte inferior */
-    padding: 20px;
-    border: 1px solid #e2e9e6;
-    border-top: none; /* Evita borde doble entre navegación y contenido */
-    animation: fadeEffect 1s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra uniforme con los formularios */
+    padding: 16px;
+    font-size: 0.9rem;
   }
-  
-  /* Transición para el contenido de las pestañas */
-  @keyframes fadeEffect {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  /* Mejoras para móviles */
-  @media (max-width: 768px) {
-    .tabs-navigation button,
-    .subtablink {
-      flex: 1;
-      padding: 10px;
-      font-size: 0.9rem;
-    }
-  }
-  </style>
-  
+}
+</style>
