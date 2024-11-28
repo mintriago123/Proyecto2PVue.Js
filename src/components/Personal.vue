@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div class="info">
-      <button class="logout-button" @click="logout">Cerrar sesión</button>
-
-      <h2 id="pers">Bienvenido miembro del Personal</h2>
-      <img id="perfil" src="../assets/img/perfil.png" >
-
-      <div v-if="usuario">
+    <button class="logout-button" @click="logout">Cerrar sesión</button>
+    <div id="usuarioInfo">
+      <div v-if="usuario" class="info">
+        <h2 id="estd">Bienvenido, Personal</h2>
+        <img id="perfil" src="../assets/img/perfil.png" >
         <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellido }}</p>
         <p><strong>Correo:</strong> {{ usuario.correo }}</p>
         <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>

@@ -8,7 +8,7 @@ body {
 }
 
 /* Contenedores generales */
-form, .loginForm, .bienvenida, .servicios, #citasEstudiante, #citasPersonal,.info {
+form, .loginForm, .bienvenida, .servicios, #citasEstudiante, #citasPersonal,#usuarioInfo {
     background-color: #fff;
     border-radius: 12px;
     padding: 24px;
@@ -18,7 +18,7 @@ form, .loginForm, .bienvenida, .servicios, #citasEstudiante, #citasPersonal,.inf
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-form:hover, .loginForm:hover, .bienvenida:hover, .servicios:hover, #citasEstudiante:hover, #citasPersonal:hover {
+form:hover, .loginForm:hover, .bienvenida:hover, .servicios:hover, #citasEstudiante:hover, #citasPersonal:hover,#usuarioInfo:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
