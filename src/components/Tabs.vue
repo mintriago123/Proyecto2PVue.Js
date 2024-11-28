@@ -1,45 +1,37 @@
+<script setup>
+import { ref } from 'vue';
+
+const props = defineProps({
+  tabs: {
+    type: Array,
+    required: true,
+  },
+});
+
+const activeTab = ref(props.tabs[0]);
+</script>
+
 <template>
-    <div class="tabs">
-      <!-- Navegación de pestañas -->
-      <div class="tabs-navigation">
-        <button
-          v-for="tab in tabs"
-          :key="tab"
-          :class="{ active: tab === activeTab }"
-          @click="selectTab(tab)"
-        >
-          {{ tab }}
-        </button>
-      </div>
-  
-      <!-- Contenido dinámico -->
-      <div class="tabs-content">
-        <slot :name="activeTab"></slot>
-      </div>
+  <div>
+    <!-- Navegación de pestañas -->
+    <div class="tabs-navigation">
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        :class="{ active: activeTab === tab }"
+        @click="activeTab = tab"
+      >
+        {{ tab }}
+      </button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "Tabs",
-    props: {
-      tabs: {
-        type: Array,
-        required: true, // Array con los nombres de las pestañas
-      },
-    },
-    data() {
-      return {
-        activeTab: this.tabs[0], // Por defecto, se selecciona la primera pestaña
-      };
-    },
-    methods: {
-      selectTab(tab) {
-        this.activeTab = tab; // Cambia la pestaña activa
-      },
-    },
-  };
-  </script>
+
+    <!-- Contenido de las pestañas -->
+    <div class="tabs-content">
+      <slot :name="activeTab.toLowerCase().replace(/\s+/g, '-')"></slot>
+    </div>
+  </div>
+</template>
+
   <style scoped>
   /* Contenedor principal de las pestañas */
 .tabs-navigation {
