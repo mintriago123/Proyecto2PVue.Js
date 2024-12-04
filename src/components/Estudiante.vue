@@ -70,7 +70,7 @@ export default {
     const router = useRouter();
 
     const cargarCitas = () => {
-      const xmlData = localStorage.getItem("citas"); // Obtenemos el XML desde localStorage
+      const xmlData = localStorage.getItem('citas'); // Obtenemos el XML desde localStorage
       if (!xmlData) {
         console.log("No se encontraron citas en localStorage.");
         return;
@@ -82,18 +82,16 @@ export default {
 
       // Extraemos las citas disponibles
       const citasElements = xmlDoc.getElementsByTagName("cita");
-      const citas = Array.from(citasElements).map((cita) => ({
-        id: cita.getAttribute("id"),
+      const citas = Array.from(citasElements).map(cita => ({
+        id: cita.getAttribute('id'),
         fecha: cita.getElementsByTagName("fecha")[0].textContent,
         hora: cita.getElementsByTagName("hora")[0].textContent,
-        disponible:
-          cita.getElementsByTagName("disponible")[0].textContent === "true",
+        disponible: cita.getElementsByTagName("disponible")[0].textContent === 'true'
       }));
 
       // Filtramos las citas disponibles
-      citasDisponibles.value = citas.filter((cita) => cita.disponible);
+      citasDisponibles.value = citas.filter(cita => cita.disponible);
     };
-
     const abrirModal = (cita) => {
       mostrarModal.value = true;
       citaSeleccionada.value = cita;

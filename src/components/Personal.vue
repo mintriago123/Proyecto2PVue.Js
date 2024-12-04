@@ -38,7 +38,7 @@
         <p>No hay solicitudes pendientes.</p>
       </div>
     </div>
-    <!-- Modal -->
+
     <!-- Modal -->
     <div v-if="modalAbierto" class="modal">
       <div class="modal-content">
@@ -52,15 +52,15 @@
 
         <!-- Botones de Aprobar y Rechazar -->
         <button
-          @click="aprobarSolicitud(solicitud)"
-          :disabled="solicitud.aprobada || solicitud.rechazada"
+          @click="aprobarSolicitud(solicitudSeleccionada)"
+          :disabled="solicitudSeleccionada.aprobada || solicitudSeleccionada.rechazada"
         >
           Aprobar
         </button>
 
         <button
-          @click="rechazarSolicitud(solicitud)"
-          :disabled="solicitud.aprobada || solicitud.rechazada"
+          @click="rechazarSolicitud(solicitudSeleccionada)"
+          :disabled="solicitudSeleccionada.aprobada || solicitudSeleccionada.rechazada"
         >
           Rechazar
         </button>
@@ -70,6 +70,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
@@ -83,17 +84,28 @@ export default {
     const modalAbierto = ref(false);
     const solicitudSeleccionada = ref(null);
 
+    // Función para cargar solicitudes desde localStorage
     const cargarSolicitudes = () => {
       const solicitudes = JSON.parse(localStorage.getItem("solicitudes")) || [];
-      solicitudesPendientes.value = solicitudes.filter(
-        (solicitud) => !solicitud.aprobada && !solicitud.rechazada
-      );
+      console.log("Solicitudes cargadas:", solicitudes); // Comprobación
+
+      // Asegurarse de que la lista de solicitudes esté bien formada
+      if (Array.isArray(solicitudes)) {
+        solicitudesPendientes.value = solicitudes.filter(
+          (solicitud) => !solicitud.aprobada && !solicitud.rechazada
+        );
+      } else {
+        console.error("Error: las solicitudes no están en el formato correcto.");
+        solicitudesPendientes.value = [];
+      }
     };
 
+    // Función para aprobar una solicitud
     const aprobarSolicitud = (solicitud) => {
+      console.log("Aprobando solicitud:", solicitud); // Comprobación
       // Marca la solicitud como aprobada
       solicitud.aprobada = true;
-      solicitud.rechazada = false; // Aseguramos que no esté rechazada al aprobarla
+      solicitud.rechazada = false;
 
       // Actualiza el localStorage con la solicitud aprobada
       let solicitudes = JSON.parse(localStorage.getItem("solicitudes")) || [];
@@ -101,9 +113,10 @@ export default {
       if (index !== -1) {
         solicitudes[index] = solicitud;
         localStorage.setItem("solicitudes", JSON.stringify(solicitudes));
+      } else {
+        console.error("Solicitud no encontrada para aprobar");
       }
 
-      // Recargamos las solicitudes
       cargarSolicitudes();
       alert("Solicitud aprobada.");
       cerrarModal();
@@ -111,9 +124,10 @@ export default {
 
     // Función para rechazar una solicitud
     const rechazarSolicitud = (solicitud) => {
+      console.log("Rechazando solicitud:", solicitud); // Comprobación
       // Marca la solicitud como rechazada
       solicitud.rechazada = true;
-      solicitud.aprobada = false; // Aseguramos que no esté aprobada al rechazarla
+      solicitud.aprobada = false;
 
       // Actualiza el localStorage con la solicitud rechazada
       let solicitudes = JSON.parse(localStorage.getItem("solicitudes")) || [];
@@ -121,23 +135,28 @@ export default {
       if (index !== -1) {
         solicitudes[index] = solicitud;
         localStorage.setItem("solicitudes", JSON.stringify(solicitudes));
+      } else {
+        console.error("Solicitud no encontrada para rechazar");
       }
 
-      // Recargamos las solicitudes
       cargarSolicitudes();
       alert("Solicitud rechazada.");
       cerrarModal();
     };
+
+    // Abre el modal con la solicitud seleccionada
     const abrirModal = (solicitud) => {
       solicitudSeleccionada.value = solicitud;
       modalAbierto.value = true;
     };
 
+    // Cierra el modal
     const cerrarModal = () => {
       modalAbierto.value = false;
       solicitudSeleccionada.value = null;
     };
 
+    // Reinicia todas las citas
     const reiniciarCitas = () => {
       let solicitudes = JSON.parse(localStorage.getItem("solicitudes")) || [];
       solicitudes = solicitudes.map((solicitud) => {
@@ -151,11 +170,13 @@ export default {
       alert("Todas las citas han sido reiniciadas.");
     };
 
+    // Cierra la sesión y redirige a la página de inicio
     const logout = () => {
       localStorage.removeItem("usuario");
       router.push({ name: "Home" });
     };
 
+    // Carga las solicitudes al iniciar el componente
     cargarSolicitudes();
 
     return {
@@ -171,6 +192,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .modal {
   position: fixed;
