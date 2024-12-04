@@ -69,29 +69,47 @@ export default {
     const sintomas = ref("");
     const router = useRouter();
 
-    const cargarCitas = () => {
-      const xmlData = localStorage.getItem('citas'); // Obtenemos el XML desde localStorage
-      if (!xmlData) {
-        console.log("No se encontraron citas en localStorage.");
-        return;
-      }
+    const cargarCitas = async () => {
+  try {
+    // Realiza una solicitud HTTP para obtener el archivo XML
+    const response = await fetch("/citas.xml");
 
-      // Parseamos el XML a un objeto JavaScript
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+    // Si la respuesta es exitosa, lee el contenido
+    if (!response.ok) {
+      throw new Error("No se pudo cargar el archivo XML.");
+    }
 
-      // Extraemos las citas disponibles
-      const citasElements = xmlDoc.getElementsByTagName("cita");
-      const citas = Array.from(citasElements).map(cita => ({
-        id: cita.getAttribute('id'),
-        fecha: cita.getElementsByTagName("fecha")[0].textContent,
-        hora: cita.getElementsByTagName("hora")[0].textContent,
-        disponible: cita.getElementsByTagName("disponible")[0].textContent === 'true'
-      }));
+    const xmlData = await response.text(); // Obtiene el XML como texto
 
-      // Filtramos las citas disponibles
-      citasDisponibles.value = citas.filter(cita => cita.disponible);
-    };
+    // Parsear el XML a un objeto JavaScript
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+
+    // Verifica si hubo un error al parsear el XML
+    const errorNode = xmlDoc.querySelector("parsererror");
+    if (errorNode) {
+      console.error("Error al parsear el XML:", errorNode.textContent);
+      return;
+    }
+
+    // Extrae las citas disponibles del XML
+    const citasElements = xmlDoc.getElementsByTagName("cita");
+    const citas = Array.from(citasElements).map(cita => ({
+      id: cita.getAttribute('id'),
+      fecha: cita.getElementsByTagName("fecha")[0].textContent,
+      hora: cita.getElementsByTagName("hora")[0].textContent,
+      disponible: cita.getElementsByTagName("disponible")[0].textContent === 'true'
+    }));
+
+    // Filtra las citas disponibles
+    citasDisponibles.value = citas.filter(cita => cita.disponible);
+
+  } catch (error) {
+    console.error("Error al cargar las citas:", error);
+  }
+};
+
+
     const abrirModal = (cita) => {
       mostrarModal.value = true;
       citaSeleccionada.value = cita;
