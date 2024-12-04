@@ -4,7 +4,7 @@
 
     <div id="usuarioInfo">
       <div v-if="usuario" class="info">
-        <h2 id="estd">Bienvenido, Estudiante</h2>
+        <h2 id="estd" >Bienvenido, Estudiante</h2>
         <img id="perfil" src="../assets/img/perfil.png" >
         <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellido }}</p>
         <p><strong>Correo:</strong> {{ usuario.correo }}</p>
@@ -41,29 +41,15 @@ export default {
     const citasDisponibles = ref([]);
     const router = useRouter();
 
-    // Función para cargar las citas disponibles
+    // Función para cargar las citas disponibles desde XML
     const cargarCitas = () => {
-      let xmlData = localStorage.getItem('citas');
-
+      const xmlData = localStorage.getItem('citas'); // Obtenemos el XML desde localStorage
       if (!xmlData) {
-        xmlData = `
-          <citas>
-            <cita id="1">
-              <fecha>2024-10-10</fecha>
-              <hora>10:00</hora>
-              <disponible>true</disponible>
-            </cita>
-            <cita id="2">
-              <fecha>2024-10-11</fecha>
-              <hora>14:00</hora>
-              <disponible>true</disponible>
-            </cita>
-          </citas>
-        `;
-        localStorage.setItem('citas', xmlData);
+        console.log("No se encontraron citas en localStorage.");
+        return;
       }
 
-      // Parseamos el XML
+      // Parseamos el XML a un objeto JavaScript
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlData, "application/xml");
 
@@ -91,7 +77,7 @@ export default {
         aprobada: false,
       };
 
-      // Guardar la solicitud en el localStorage
+      // Guardar la solicitud en el localStorage (en formato XML)
       let solicitudes = JSON.parse(localStorage.getItem('solicitudes')) || [];
       solicitudes.push(solicitud);
       localStorage.setItem('solicitudes', JSON.stringify(solicitudes));
@@ -99,8 +85,18 @@ export default {
       // Marcar la cita como no disponible
       cita.disponible = false;
 
-      // Volver a guardar las citas en el localStorage
-      localStorage.setItem('citas', new XMLSerializer().serializeToString(xmlDoc));
+      // Volver a guardar las citas en el localStorage en formato XML
+      const xmlDoc = new DOMParser().parseFromString(localStorage.getItem('citas'), 'application/xml');
+      const citasElements = xmlDoc.getElementsByTagName('cita');
+      for (let citaElement of citasElements) {
+        if (citaElement.getAttribute('id') === cita.id.toString()) {
+          citaElement.getElementsByTagName('disponible')[0].textContent = 'false';
+        }
+      }
+
+      const xmlSerializer = new XMLSerializer();
+      const updatedXmlData = xmlSerializer.serializeToString(xmlDoc);
+      localStorage.setItem('citas', updatedXmlData);
 
       alert("Cita solicitada con éxito");
     };
@@ -108,7 +104,7 @@ export default {
     // Función para cerrar sesión
     const logout = () => {
       localStorage.removeItem('usuario');
-      router.push({ name: 'Home' });
+      router.push({ name: 'Login' });
     };
 
     // Cargar citas cuando el componente se monte
