@@ -14,6 +14,17 @@
       </div>
     </div>
 
+    <div id="estadoSolicitud" v-if="estadoSolicitud">
+      <h3>Estado de tu solicitud:</h3>
+      <p v-if="estadoSolicitud === 'aprobada'">
+        ¡Tu solicitud ha sido aprobada!
+      </p>
+      <p v-else-if="estadoSolicitud === 'rechazada'">
+        Tu solicitud ha sido rechazada.
+      </p>
+      <p v-else>Tu solicitud está pendiente de revisión.</p>
+    </div>
+
     <div id="citasEstudiante">
       <h2>Agendar una cita</h2>
       <div v-if="citasDisponibles.length > 0">
@@ -69,46 +80,51 @@ export default {
     const sintomas = ref("");
     const router = useRouter();
 
+
     const cargarCitas = async () => {
-  try {
-    // Realiza una solicitud HTTP para obtener el archivo XML
-    const response = await fetch("/citas.xml");
+      // Verificar si ya hay citas en localStorage
+      const citasGuardadas = JSON.parse(localStorage.getItem("citas"));
 
-    // Si la respuesta es exitosa, lee el contenido
-    if (!response.ok) {
-      throw new Error("No se pudo cargar el archivo XML.");
-    }
+      if (citasGuardadas) {
+        // Si las citas ya están en localStorage, usarlas directamente
+        citasDisponibles.value = citasGuardadas.filter(cita => cita.disponible);
+        return; // Salir de la función para no hacer la solicitud HTTP
+      }
 
-    const xmlData = await response.text(); // Obtiene el XML como texto
+      // Si no hay citas en localStorage, hacer la solicitud al archivo XML
+      try {
+        const response = await fetch("/citas.xml");
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el archivo XML.");
+        }
 
-    // Parsear el XML a un objeto JavaScript
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+        const xmlData = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+        const errorNode = xmlDoc.querySelector("parsererror");
 
-    // Verifica si hubo un error al parsear el XML
-    const errorNode = xmlDoc.querySelector("parsererror");
-    if (errorNode) {
-      console.error("Error al parsear el XML:", errorNode.textContent);
-      return;
-    }
+        if (errorNode) {
+          console.error("Error al parsear el XML:", errorNode.textContent);
+          return;
+        }
 
-    // Extrae las citas disponibles del XML
-    const citasElements = xmlDoc.getElementsByTagName("cita");
-    const citas = Array.from(citasElements).map(cita => ({
-      id: cita.getAttribute('id'),
-      fecha: cita.getElementsByTagName("fecha")[0].textContent,
-      hora: cita.getElementsByTagName("hora")[0].textContent,
-      disponible: cita.getElementsByTagName("disponible")[0].textContent === 'true'
-    }));
+        const citasElements = xmlDoc.getElementsByTagName("cita");
+        const citas = Array.from(citasElements).map(cita => ({
+          id: cita.getAttribute('id'),
+          fecha: cita.getElementsByTagName("fecha")[0].textContent,
+          hora: cita.getElementsByTagName("hora")[0].textContent,
+          disponible: cita.getElementsByTagName("disponible")[0].textContent === 'true'
+        }));
 
-    // Filtra las citas disponibles
-    citasDisponibles.value = citas.filter(cita => cita.disponible);
+        // Guardar las citas en localStorage para uso futuro
+        localStorage.setItem("citas", JSON.stringify(citas));
 
-  } catch (error) {
-    console.error("Error al cargar las citas:", error);
-  }
-};
-
+        // Filtrar las citas disponibles y asignarlas a la variable de citasDisponibles
+        citasDisponibles.value = citas.filter(cita => cita.disponible);
+      } catch (error) {
+        console.error("Error al cargar las citas:", error);
+      }
+    };
 
     const abrirModal = (cita) => {
       mostrarModal.value = true;
